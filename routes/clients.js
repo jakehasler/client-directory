@@ -36,28 +36,45 @@ router.post('/', function(req, res, next) {
   // actual object from request
   //data = req.body;
 
+  
   // insert object to database 
-  req.on('data', function (chunk) {
-  		data = req.body;
-        var dataObj = data;
-        console.log(dataObj);
-   });
-  req.on('end', function () {
-        
-        // Now put it into the database
-        var MongoClient = require('mongodb').MongoClient;
-        MongoClient.connect("mongodb://localhost/clientdb", function(err, db) {
-          if(err) throw err;
-          db.collection('clients').insert(dataObj,function(err, records) {
-            console.log("Record added as "+records[0]);
-            res.writeHead(200);
-            //res.end(data);
-          });
+  //req.on('data', function (chunk) {
+      //console.log("Inside req.on data");
+      data = req.body;
+      var dataObj = data;
+      console.log(data);
+
+
+      var MongoClient = require('mongodb').MongoClient;
+      MongoClient.connect("mongodb://localhost/clientdb", function(err, db) {
+        if(err) throw err;
+        db.collection('clients').insert(dataObj,function(err, records) {
+          console.log("Record added as " + records[0]);
+          //res.writeHead(200);
+          res.send(data);
         });
       });
+  // });
+    //console.log(req);
+    // req.on('end', function () {
+    //   console.log("Inside req.on");
+    //   // Now put it into the database
+    //   var MongoClient = require('mongodb').MongoClient;
+    //   MongoClient.connect("mongodb://localhost/clientdb", function(err, db) {
+    //     if(err) throw err;
+    //     db.collection('clients').insert(dataObj,function(err, records) {
+    //       console.log("Record added as " + records[0]);
+    //       res.writeHead(200);
+    //       res.end(data);
+    //     });
+    //   });
+    // });
 
-  // just for priting out actual object
-  res.send(data);
+    
+
+
+  // just for printing out actual object
+  //res.send(dataObj);
   //console.log(data);
   //res.send(req);
 });

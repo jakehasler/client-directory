@@ -97,7 +97,9 @@ app.controller('MainController', ['$scope', '$http', function($scope, $http) {
       };
       //console.log(formObj);
 
-      $http.post('/clients', formObj).success(function(data)
+      var jsonObj = angular.toJson(formObj);
+
+      $http.post('clients', jsonObj).success(function(data, status, headers, config)
       {
           //console.log('The object: ' + data + ' has been posted');
           console.log(data);
