@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <title>Foxtail Client Directory</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- Custom CSS -->
+    <link href="css/simple-sidebar.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body ng-app="ClientDirectory" ng-controller="MainController">
+
+    <!-- Nav Bar Here -->
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        <img alt="Brand" src="images/favicon.png" style="width: 40px;">
+      </a>
+      <form class="navbar-form navbar-left" role="search">
+  <div class="form-group">
+    <input type="text" class="form-control" ng-model="search" placeholder="Search">
+  </div>
+  <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Show Client List</a>
+</form>
+    </div>
+  </div>
+</nav>
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                   
+                    <a href="#" ng-click="genNewUserPage()">
+                         <i class="fa fa-plus-circle"></i>Create New User</a>
+                </li>
+                <li ng-repeat="x in clients | filter:search">
+                    
+                    <a href="#" id="{{ x.id }}" style="line-height: 30px">
+                        <img src='{{ x.faviconURL }}' class="roundIcon" class="" style='vertical-align: middle' />{{ x.name }}</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>{{ title }}</h1>
+                        <p>Input your client information below, and it will be added to the database. Once it is in the database, then it will appear in the left sidebar, so that you can reference and edit the information as needed</p>
+                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- form container -->
+            <div class="col-md-8">
+                <h2>Create New User</h2>
+                  <form class="form-horizontal" ng-submit="submit()" role="form">
+                    <div class="form-group">
+                      <label class="control-label col-sm-3" for="email">Client Name:</label>
+                      <div class="col-sm-10">
+                        <input type="name" ng-model="clientName"class="form-control" id="name" placeholder="Enter Client Name">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-3" for="website">Website:</label>
+                      <div class="col-sm-10">          
+                        <input type="website" ng-model="clientSite" class="form-control" id="website" placeholder="Enter Site URL">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-3" for="ga">Google Analytics ID:</label>
+                      <div class="col-sm-10">          
+                        <input type="analytics" ng-model="googleAnalyticsID" class="form-control" id="googleAnalyticsID" placeholder="Enter GA ID (e.g. UA-36378027)">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-4" for="email">Email Marketing:</label>
+                      <div class="col-sm-10">          
+                        <select type="text" class="form-control" id="website" ng-model="emailPlatform" placeholder="Email Platform">
+                            <option value="hubspot">Hubspot</option>
+                            <option value="mailchimp">Mailchimp</option>
+                            <option value="marketo">Marketo</option>
+                            <option value="other">Other</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-3" for="lp">Unbounce?:</label>
+                      <div class="col-sm-10">          
+                        <select type="text" class="form-control" id="website" ng-model="ifUnbounce" placeholder="Enter Site URL">
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">        
+                      <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit"  class="btn btn-default">Submit</button>
+                      </div>
+                    </div>
+                  </form>
+            </div> 
+            <!-- end form container -->
+            <div class="col-md-8">
+                <h3>{{ name }}</h3>
+                <h4>{{ website }}</h4>
+                <h5>{{ email }}</h5>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Angular Include -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+
+    <!-- Modules -->
+     <script src="js/app.js"></script>
+
+     <!-- Controllers -->
+     <script src="js/MainController.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
+
+</body>
+
+</html>
